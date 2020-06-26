@@ -15,44 +15,48 @@
    a commercial license, send an email to license@arduino.cc.
 */
 
-#ifndef ARDUINO_OTA_STORAGE_H_
-#define ARDUINO_OTA_STORAGE_H_
+#ifndef ARDUINO_OTA_STORAGE_NINA_H_
+#define ARDUINO_OTA_STORAGE_NINA_H_
 
 /******************************************************************************
  * INCLUDE
  ******************************************************************************/
 
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdbool.h>
+#include <ArduinoIoTCloud_Config.h>
+#if OTA_STORAGE_NINA
+
+#include "OTAStorage.h"
+
+#include <WiFiNINA.h>
 
 /******************************************************************************
  * CLASS DECLARATION
  ******************************************************************************/
 
-class OTAStorage
+class OTAStorage_Nina : public OTAStorage
 {
 public:
 
-  virtual ~OTAStorage() { }
+           OTAStorage_Nina();
+  virtual ~OTAStorage_Nina() { }
 
 
-  enum class Type : int
-  {
-    NotAvailable = -1,
-    MKRMEM       =  0,
-    Nina         =  1,
-  };
+  virtual Type   type  () override { return Type::Nina; }
+  virtual bool   init  () override;
+  virtual bool   open  (char const * file_name) override;
+  virtual size_t write (uint8_t const * const buf, size_t const num_bytes) override;
+  virtual void   close () override;
+  virtual void   remove(char const * file_name) override;
+  virtual bool   rename(char const * old_file_name, char const * new_file_name) override;
+  virtual void   deinit() override;
 
-  virtual Type   type  () = 0;
-  virtual bool   init  () = 0;
-  virtual bool   open  (char const * file_name) = 0;
-  virtual size_t write (uint8_t const * const buf, size_t const num_bytes) = 0;
-  virtual void   close () = 0;
-  virtual void   remove(char const * file_name) = 0;
-  virtual bool   rename(char const * old_file_name, char const * new_file_name) = 0;
-  virtual void   deinit() = 0;
+
+private:
+
+  WiFiStorageFile * _file;
 
 };
 
-#endif /* ARDUINO_OTA_STORAGE_H_ */
+#endif /* OTA_STORAGE_NINA */
+
+#endif /* ARDUINO_OTA_STORAGE_NINA_H_ */
