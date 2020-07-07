@@ -271,7 +271,7 @@ void ArduinoIoTCloudTCP::handleMessage(int length)
   }
 
   if (_stdinTopic == topic) {
-    CloudSerial.appendStdin((uint8_t*)bytes, length);
+    // CloudSerial.appendStdin((uint8_t*)bytes, length);
   }
   if (_dataTopicIn == topic) {
     CBORDecoder::decode(_property_container, (uint8_t*)bytes, length);
@@ -331,8 +331,8 @@ ArduinoIoTConnectionStatus ArduinoIoTCloudTCP::checkCloudConnection()
       if (ret == CONNECT_SUCCESS)
       {
         next_iot_status = ArduinoIoTConnectionStatus::CONNECTED;
-        CloudSerial.begin(9600);
-        CloudSerial.println("Hello from Cloud Serial!");
+        // CloudSerial.begin(9600);
+        // CloudSerial.println("Hello from Cloud Serial!");
       }
       else if (ret == CONNECT_FAILURE_SUBSCRIBE)
       {
@@ -347,8 +347,8 @@ ArduinoIoTConnectionStatus ArduinoIoTCloudTCP::checkCloudConnection()
       if (reconnect() == CONNECT_SUCCESS)
       {
         next_iot_status = ArduinoIoTConnectionStatus::CONNECTED;
-        CloudSerial.begin(9600);
-        CloudSerial.println("Hello from Cloud Serial!");
+        // CloudSerial.begin(9600);
+        // CloudSerial.println("Hello from Cloud Serial!");
       }
     }
     break;

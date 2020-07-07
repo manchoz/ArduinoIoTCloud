@@ -87,7 +87,7 @@ class ArduinoIoTCloudTCP: public ArduinoIoTCloudClass
     // Clean up existing Mqtt connection, create a new one and initialize it
     int reconnect();
 
-    friend class CloudSerialClass;
+    // friend class CloudSerialClass;
 
 
   protected:
