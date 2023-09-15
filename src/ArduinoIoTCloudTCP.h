@@ -86,7 +86,7 @@ class ArduinoIoTCloudTCP: public ArduinoIoTCloudClass
     #endif
     int begin(bool const enable_watchdog = true, String brokerAddress = DEFAULT_BROKER_ADDRESS_SECURE_AUTH, uint16_t brokerPort = DEFAULT_BROKER_PORT_SECURE_AUTH);
 
-    size_t getPayload(uint8_t *, size_t);
+    size_t getPayload(uint8_t *, size_t) override;
 
 
     #ifdef BOARD_HAS_SECRET_KEY

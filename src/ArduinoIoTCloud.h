@@ -87,6 +87,7 @@ class ArduinoIoTCloudClass
     virtual void update        () = 0;
     virtual int  connected     () = 0;
     virtual void printDebugInfo() = 0;
+    virtual size_t getPayload  (uint8_t *, size_t) = 0;
 
             void push();
             bool setTimestamp(String const & prop_name, unsigned long const timestamp);

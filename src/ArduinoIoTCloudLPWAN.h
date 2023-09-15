@@ -41,7 +41,7 @@ class ArduinoIoTCloudLPWAN : public ArduinoIoTCloudClass
 
     int begin(ConnectionHandler& connection, bool retry = false);
 
-    size_t getPayload(uint8_t *, size_t);
+    size_t getPayload(uint8_t *, size_t) override;
 
     inline bool isRetryEnabled  () const { return _retryEnable; }
     inline int  getMaxRetry     () const { return _maxNumRetry; }
