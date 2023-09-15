@@ -145,6 +145,17 @@ void ArduinoIoTCloudLPWAN::decodePropertiesFromCloud()
   CBORDecoder::decode(_thing_property_container, lora_msg_buf, bytes_received);
 }
 
+size_t ArduinoIoTCloudLPWAN::getPayload(uint8_t *data, size_t max_size)
+{
+  int bytes_encoded = 0;
+
+  auto status = CBOREncoder::encode(_thing_property_container, data, max_size, bytes_encoded, _last_checked_property_index, true);
+  if (status == CborNoError && bytes_encoded > 0)
+    return bytes_encoded;
+  else
+    return -1;
+}
+
 void ArduinoIoTCloudLPWAN::sendPropertiesToCloud()
 {
   int bytes_encoded = 0;

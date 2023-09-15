@@ -671,6 +671,24 @@ void ArduinoIoTCloudTCP::handleMessage(int length)
   }
 }
 
+size_t ArduinoIoTCloudTCP::getPayload(uint8_t *data, size_t max_size)
+{
+  int bytes_encoded = 0;
+
+  auto status = CBOREncoder::encode(_thing_property_container, data, max_size, bytes_encoded, _last_checked_property_index, true);
+  if (status == CborNoError && bytes_encoded > 0) {
+    return bytes_encoded;
+    for (auto i = 0; i < max_size; i++) {
+      if (data[i] < 0x10) Serial.print(0);
+      Serial.print(data[i], HEX);
+    }
+    Serial.println();
+  } else {
+    return -1;
+  }
+}
+
+
 void ArduinoIoTCloudTCP::sendPropertyContainerToCloud(String const topic, PropertyContainer & property_container, unsigned int & current_property_index)
 {
   int bytes_encoded = 0;
