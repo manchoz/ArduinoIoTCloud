@@ -24,7 +24,7 @@
 #if defined(BOARD_HAS_ECCX08) || defined(BOARD_HAS_OFFLOADED_ECCX08) || defined(BOARD_HAS_SE050)
 
 #include "CryptoUtil.h"
-#include "SHA256.h"
+#include <SHA256.h> // From ArduinoBearSSL
 
 /******************************************************************************
  * DEFINE
@@ -75,11 +75,11 @@ int CryptoUtil::buildCSR(ArduinoIoTCloudCertClass & cert, const CryptoSlot keySl
   }
 
   /* compute CSR SHA256 */
-  SHA256 sha256;
+  SHA256Class sha256;
   byte sha256buf[CRYPTO_SHA256_BUFFER_LENGTH];
   sha256.begin();
   sha256.update(cert.bytes(), cert.length());
-  sha256.finalize(sha256buf);
+  sha256.end(sha256buf);
 
   if (!_crypto.ecSign(static_cast<int>(keySlot), sha256buf, signature)) {
     return 0;

@@ -26,7 +26,8 @@
 #include "OTA.h"
 #include <Arduino_DebugUtils.h>
 #include <Arduino_ESP32_OTA.h>
-#include "tls/utility/SHA256.h"
+
+#include <SHA256.h> // From ArduinoBearSSL
 
 #include <esp_ota_ops.h>
 
@@ -105,11 +106,11 @@ String esp32_getOTAImageSHA256()
   free(b);
 
   /* Retrieve the final hash string. */
-  uint8_t sha256_hash[SHA256::HASH_SIZE] = {0};
-  sha256.finalize(sha256_hash);
+  uint8_t sha256_hash[SHA256Class::HASH_SIZE] = {0};
+  sha256.end(sha256_hash);
   String sha256_str;
   std::for_each(sha256_hash,
-                sha256_hash + SHA256::HASH_SIZE,
+                sha256_hash + SHA256Class::HASH_SIZE,
                 [&sha256_str](uint8_t const elem)
                 {
                   char buf[4];

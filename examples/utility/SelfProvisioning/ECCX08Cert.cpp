@@ -194,7 +194,7 @@ String ECCX08CertClass::endCSR() {
 
   sha256.begin();
   sha256.update(csrInfo, csrInfoHeaderLen + csrInfoLen);
-  sha256.finalize(csrInfoSha256);
+  sha256.end(csrInfoSha256);
 
   if (!ECCX08.ecSign(_keySlot, csrInfoSha256, signature)) {
     return "";
